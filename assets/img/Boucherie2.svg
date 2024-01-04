@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="45" viewBox="0 0 45 45">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_16975" data-name="Path 16975" d="M0,9.06H15.35V-9.6H0Z" transform="translate(0 9.602)" fill="rgba(0,0,0,0)"/>
+    </clipPath>
+  </defs>
+  <g id="Boucherie_2" data-name="Boucherie 2" transform="translate(-970 -588)">
+    <g id="Boucherie" transform="translate(303)">
+      <circle id="Ellipse_599" data-name="Ellipse 599" cx="22.5" cy="22.5" r="22.5" transform="translate(667 588)" fill="#eb3b5a"/>
+      <g id="Group_16819" data-name="Group 16819" transform="translate(681.734 611.063)">
+        <g id="Group_16818" data-name="Group 16818" transform="translate(0 -9.602)" clip-path="url(#clip-path)">
+          <g id="Group_16817" data-name="Group 16817" transform="translate(0 -0.001)">
+            <path id="Path_16974" data-name="Path 16974" d="M7.347,8.076,3.013,1.5A.609.609,0,0,0,2.445.422L1-3.088a20.569,20.569,0,0,1-1.283-4.5v0A1.159,1.159,0,0,0-1.62-8.543a1.157,1.157,0,0,0-.426.161l-1.16.725a8.914,8.914,0,0,1-1.067.569L-7.721-5.537c-.315.167.54,2.4,1.907,5s2.729,4.562,3.042,4.4c.012-.008,4.062-2.142,4.062-2.142A.6.6,0,0,0,2.07,2L5.044,9.289A1.308,1.308,0,0,0,7.468,8.3a1.413,1.413,0,0,0-.121-.227M-1.733-5.348a.877.877,0,0,1-1.182-.367A.877.877,0,0,1-2.548-6.9a.876.876,0,0,1,1.182.365.879.879,0,0,1-.367,1.184" transform="translate(7.787 8.559)" fill="#fff"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

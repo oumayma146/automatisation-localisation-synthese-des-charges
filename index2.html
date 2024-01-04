@@ -1,0 +1,1421 @@
+<meta charset="utf-8" />
+<link rel="icon" type="image/png" href="assets/img/favicon.svg" />
+<link rel="stylesheet" href="assets/css/style.css" />
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyAkRWLEOVHprtRqAjovScwqIAtNOZwHoM0"></script>
+<div class="form">
+    <div>
+        <p><strong>ADRESSE ET LOCALISATION</strong></p>
+        <input type="text" name="address" class="realTime" id="ADDRESS" placeholder="Adresse du bien" />
+        <input type="text" name="latLongAdresse" class="latLongAdresse" placeholder="Latitude, longitude" />
+        <br />
+        <textarea placeholder="Description du bien" class="realTime localisation-address" id="DESCRIPTION"
+            name="localisation-description"></textarea>
+            <button id="searchPlacesButton">Search Nearby Places</button>
+
+        <br /><br />
+        <!-- TRANSPORTS EN COMMUN -->
+       <!--  <p><strong>TRANSPORTS EN COMMUN</strong></p>
+        <form id="transport-form" method="post">
+            <div class="repeat-block-transport"></div>
+            <div class="content-transport-block"></div>
+        </form>
+        <p><span class="add-new-transport cursor-pointer">+ Transport en commun</span> <span
+                class="validate-transport cursor-pointer">Valider cette partie</span> <span
+                class="reset-transport cursor-pointer">Réinitialiser</span></p>
+ -->
+        <!-- COMMERCES -->
+      <!--   <p><br /><strong>COMMERCES</strong></p>
+        <form id="commerce-form" method="post">
+            <div class="repeat-block-commerce"></div>
+            <div class="content-commerce-block"></div>
+        </form>
+        <p><span class="add-new-commerce cursor-pointer">+ Commerce</span> <span
+                class="validate-commerce cursor-pointer">Valider cette partie</span> <span
+                class="reset-commerce cursor-pointer">Réinitialiser</span></p> -->
+
+        <!-- RESTAURANT -->
+       <!--  <p><br /><strong>RESTAURANT</strong></p>
+        <form id="restaurant-form" method="post">
+            <div class="repeat-block-restaurant"></div>
+            <div class="content-restaurant-block"></div>
+        </form>
+        <p><span class="add-new-restaurant cursor-pointer">+ Restaurant</span> <span
+                class="validate-restaurant cursor-pointer">Valider cette partie</span> <span
+                class="reset-restaurant cursor-pointer">Réinitialiser</span></p>
+ -->
+        <!-- AXES ROUTIERS -->
+      <!--   <p><br /><strong>AXES ROUTIERS</strong></p>
+        <form id="axes-form" method="post">
+            <div class="repeat-block-axes"></div>
+            <div class="content-axes-block"></div>
+        </form>
+        <p><span class="add-new-axes cursor-pointer">+ Axe routier</span> <span
+                class="validate-axes cursor-pointer">Valider cette partie</span> <span
+                class="reset-axes cursor-pointer">Réinitialiser</span></p> -->
+
+        <!-- AUTRES -->
+       <!--  <p><br /><strong>AUTRES</strong></p>
+        <form id="autres-form" method="post">
+            <div class="repeat-block-autres"></div>
+            <div class="content-autres-block"></div>
+        </form>
+        <p><span class="add-new-autres cursor-pointer">+ Autre</span> <span
+                class="validate-autres cursor-pointer">Valider cette partie</span> <span
+                class="reset-autres cursor-pointer">Réinitialiser</span></p> -->
+    </div>
+</div>
+<div class="app" id="contentApp">
+    <div id="map"></div>
+    <div id="content">
+        <div class="overflow-hidden">
+            <h1><strong class="uppercase" id="Localisation">LOCALISATION</strong></h1>
+            <p>
+                <strong class="address">Lorem ipsum dolor sit amet</strong>
+            </p>
+            <p class="description"></p>
+            <div class="hr" style="height: 0.8px;"></div>
+        </div>
+        <div class="overflow-hidden">
+            <p>
+                <strong class="uppercase" id="Transports-en-commun">TRANSPORTS EN COMMUN</strong>
+            </p>
+            <div class="overflow-hidden">
+                <table class="width-100">
+                    <tbody class="transport-content"></tbody>
+                </table>
+            </div>
+            <div class="hr" style="height: 0.8px;"></div>
+        </div>
+        <div class="overflow-hidden">
+            <p>
+                <strong class="uppercase" id="Commerces">COMMERCES</strong>
+            </p>
+            <div class="overflow-hidden">
+                <table style="width:50%;float:left;">
+                    <tbody class="commerce-content"></tbody>
+                </table>
+                <table style="width: 48%;display: inline-block;margin-left: 2%;">
+                    <tbody class="commerce-content-2"></tbody>
+                    <tbody class="commerce-content-3"></tbody>
+                </table>
+            </div>
+            <div class="hr" style="height: 0.7px;"></div>
+        </div>
+        <div class="overflow-hidden">
+            <p>
+                <strong class="uppercase" id="Restaurants">RESTAURANTS</strong>
+            </p>
+            <div class="restaurant-content"></div>
+            <div class="hr" style="height: 0.8px;margin-top: 15px;"></div>
+        </div>
+        <div class="overflow-hidden">
+            <p>
+                <strong class="uppercase" id="Axes-Routiers">AXES ROUTIERS</strong>
+            </p>
+            <div class="axes-content"></div>
+            <div class="hr" style="height: 0.6px;margin-top: 15px;"></div>
+        </div>
+        <div class="overflow-hidden">
+            <p>
+                <strong class="uppercase" id="Autres">AUTRES</strong>
+            </p>
+            <div class="autres-content overflow-hidden"></div>
+        </div>
+    </div>
+</div>
+<p>&nbsp;</p>
+
+<p>&nbsp;</p>
+<button onclick="$.MultiLanguage('language.json', 'fr')" id="lang-fr" class="changeLanguage btn btn-danger">FR</button>
+<button onclick="$.MultiLanguage('language.json', 'en')" id="lang-en" class="changeLanguage btn btn-primary">EN</button>
+<button onclick="$.MultiLanguage('language.json', 'nl')" id="lang-nl" class="changeLanguage btn btn-info">NL</button>
+<input type="hidden" id="hiddenLanguage" />
+<button id="downloadPdf" class="btn btn-success" onclick="exportPDF()">Exporter le PDF</button>
+<button id="dowloadJson" class="btn btn-secondary" onclick="exportToJsonFile()">Export JSON</button>
+<input type="file" id="selectFiles" value="Import" style="float: right; margin-right: 191px" />
+<button id="ImportJson" class="btn btn-warning">Import JSON</button>
+<p>&nbsp;</p>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css"
+    integrity="sha512-xmGTNt20S0t62wHLmQec2DauG9T+owP9e6VU8GigI0anN7OXLip9i7IwEhelasml2osdxX71XcYm6BQunTQeQg=="
+    crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"
+    integrity="sha512-9UR1ynHntZdqHnwXKTaOm1s6V9fExqejKvg5XMawEMToW4sSw+3jtLrYfZPijvnwnnE8Uol1O9BcAskoxgec+g=="
+    crossorigin="anonymous"></script>
+    <script>
+    document.getElementById('searchPlacesButton').addEventListener('click', function() {
+        // Get input values
+        var address = document.getElementById('ADDRESS').value;
+    
+        // Get latitude and longitude values from $('.latLongAdresse')
+        var getData = $('.latLongAdresse').val();
+        const array = getData.split(",");
+        var lat = array[0];
+        var long = array[1];
+    
+        // Construct the URL for the API call using the obtained latitude and longitude
+        var apiUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?';
+        var apiKey = 'AIzaSyAkRWLEOVHprtRqAjovScwqIAtNOZwHoM0'; // Replace with your Google Maps API key
+        var radius = 5000;
+        var type = 'restaurant';
+        var requestUrl = `${apiUrl}location=${lat},${long}&radius=${radius}&type=${type}&key=${apiKey}`;
+   // console.log(requestUrl); return null ;
+        // Make a fetch request to the API endpoint
+        fetch(requestUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Handle the data received from the API
+                console.log(data); // Display or process the nearby places data here
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+  
+
+</script>
+
+     
+        
+<!-- EXPORT JSON -->
+
+<script>
+    var JSONobj = {
+        LANG: "FR",
+        ADDRESS: "",
+        LAT_LONG: "",
+        DESCRIPTION: "",
+        PUBLIC_TRANSPORT: [],
+        SHOPS: [],
+        RESTAURANT: [],
+        MAIN_ROADS: [],
+        OTHERS: []
+    };
+    function exportToJsonFile() {
+        let dataStr = JSON.stringify(JSONobj);
+        let dataUri =
+            "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+
+        let exportFileDefaultName = "Backup localisation [" + $("#hiddenLanguage").val() + "] - " + $("#ADDRESS").val() + ".json";
+
+        let linkElement = document.createElement("a");
+        linkElement.setAttribute("href", dataUri);
+        linkElement.setAttribute("download", exportFileDefaultName);
+        linkElement.click();
+    }
+</script>
+<!-- IMPORT JSON -->
+<script>
+    document.getElementById("ImportJson").onclick = function () {
+        var files = document.getElementById("selectFiles").files;
+        if (files.length <= 0) {
+            return false;
+        }
+        var fr = new FileReader();
+        fr.onload = function (e) {
+            var result = JSON.parse(e.target.result);
+            var formatted = JSON.stringify(result, null, 2);
+            JSONobj = result;
+            CreateLanguageBlockWithJSON(JSONobj.LANG);
+            CreateLatLongBlockWithJSON(JSONobj.LAT_LONG);
+            CreateAddressBlockWithJSON(JSONobj.ADDRESS);
+            CreateDescriptionBlockWithJSON(JSONobj.DESCRIPTION);
+            CreateBlockPublicTransportWithJSON(JSONobj.PUBLIC_TRANSPORT);
+            CreateBlockCommerceWithJSON(JSONobj.SHOPS);
+            CreateBlockRestaurantWithJSON(JSONobj.RESTAURANT);
+            CreateBlockAxesWithJSON(JSONobj.MAIN_ROADS);
+            CreateBlockOthersWithJSON(JSONobj.OTHERS);
+        };
+        fr.readAsText(files.item(0));
+    };
+</script>
+<script>
+
+    var map;
+    var marker;
+    var markers = new Array();
+
+    /* REAL TIME KEYUP ADDRESS AND DESCIPTION */
+    $('.realTime').keyup(function () {
+        var getID = $(this).attr('id');
+        $('.' + getID).text($(this).val());
+        if (getID == "ADDRESS") {
+            JSONobj.ADDRESS = $(this).val();
+        } else if (getID == "DESCRIPTION") {
+            JSONobj.DESCRIPTION = $(this).val();
+        }
+    });
+
+    /* CREATE BLOCK ADDRESS, DESCRIPTION, LANGUAGE, LAT & LONG WITH JSON */
+    const CreateAddressBlockWithJSON = (ADDRESS) => {
+        if (!!ADDRESS) {
+            $("#ADDRESS").val(`${ADDRESS}`);
+            $('.address').text(`${ADDRESS}`);
+            return;
+        }
+    };
+    const CreateLatLongBlockWithJSON = (LAT_LONG) => {
+        if (!!LAT_LONG) {
+            $(".latLongAdresse").val(`${LAT_LONG}`);
+            var getData = `${LAT_LONG}`;
+            const array = getData.split(",");
+            google.maps.event.addDomListener(window, 'load', init(array[0], array[1]));
+            return;
+        }
+    };
+    const CreateDescriptionBlockWithJSON = (DESCRIPTION) => {
+        if (!!DESCRIPTION) {
+            $("#DESCRIPTION").val(`${DESCRIPTION}`);
+            $('.description').text(`${DESCRIPTION}`);
+            return;
+        }
+    };
+    const CreateLanguageBlockWithJSON = (LANG) => {
+        if (!!LANG) {
+            $("#hiddenLanguage").val(`${LANG}`);
+            $.MultiLanguage('language.json', `${LANG}`.toLowerCase())
+            return;
+        }
+    };
+
+    /* CLEAR MAPS WITH CATEGORY */
+    function clearMarkers(category) {
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].get('category') == category) {
+                markers[i].setMap(null);
+            }
+        }
+    }
+
+    /* REALTIME LAT LONG ADDRESS */
+    function init(lat, long) {
+        var mapOptions = {
+            zoom: 12,
+            disableDefaultUI: true,
+            center: new google.maps.LatLng(lat, long),
+            styles: [
+                {
+                    "featureType": "poi",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "poi.park",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "on"
+                        }
+                    ]
+                },
+                {
+                    "featureType": "transit.station",
+                    "elementType": "all",
+                    "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                    ]
+                }
+            ]
+        };
+        var mapElement = document.getElementById('map');
+        map = new google.maps.Map(mapElement, mapOptions);
+        new google.maps.Marker({
+            position: new google.maps.LatLng(lat, long),
+            map: map,
+            icon: 'assets/img/Home.svg',
+            draggable: true,
+            title: $('#ADDRESS').val()
+        });
+    }
+
+    $('.latLongAdresse').keyup(function () {
+        var getData = $(this).val();
+        const array = getData.split(",");
+        google.maps.event.addDomListener(window, 'load', init(array[0], array[1]));
+        JSONobj.LAT_LONG = getData;
+    });
+
+    /* REPEAT BLOCK FOR TRANSPORT */
+    function repeatBlock(el) {
+        return `
+        <input type="text" name="latLong[]" value="${el ? el?.latLong : ''}" class="latLong" placeholder="Latitude, longitude" />
+        <input type="text" name="stop[]" value="${el ? el?.stop : ''}" placeholder="Arrêt" />
+        <select name="transport[]" style="padding: 11px 12px;">
+            <option>Type de transport</option>
+            <option ${el ? el?.transport === "Station de métro" && "selected" : ''} value="Station de métro">Station de métro</option>
+            <option ${el ? el?.transport === "Arrêt de bus" && "selected" : ''} value="Arrêt de bus">Arrêt de bus</option>
+            <option ${el ? el?.transport === "Arrêt de tram" && "selected" : ''} value="Arrêt de tram">Arrêt de tram</option>
+            <option ${el ? el?.transport === "Gare" && "selected" : ''} value="Gare">Gare</option>
+        </select>
+        <input type="text" name="auto[]" value="${el ? el?.auto : ''}" placeholder="Durée en voiture" />
+        <input type="text" name="foot[]" value="${el ? el?.foot : ''}" placeholder="Durée à pied" />
+        <select name="type[]" style="padding: 11px 12px;">
+            <option value="">compagnie</option>
+            <option ${el ? el?.type === "STIB" && "selected" : ''} value="STIB">STIB</option>
+            <option ${el ? el?.type === "LIJN" && "selected" : ''} value="LIJN">LIJN</option>
+            <option ${el ? el?.type === "SNCB" && "selected" : ''} value="SNCB">SNCB</option>
+            <option ${el ? el?.type === "TEC" && "selected" : ''} value="TEC">TEC</option>
+        </select>
+        <br />
+        <input type="text" style="width:100%;" placeholder="Numéros de ligne (Après chaque saisie il faut cliquer sur la touche entrée)" class="form-control numbers" name="numbers[]" value="${el ? el?.numbers : ''}" />
+        `;
+    }
+
+    /* CREATE BLOCK TRANSPORT WITH JSON */
+    const CreateBlockPublicTransportWithJSON = (PUBLIC_TRANSPORT) => {
+        if (!!PUBLIC_TRANSPORT) {
+            if (PUBLIC_TRANSPORT[0]) {
+
+                /* THIS BLOCK IS FOR THE FIRST DIV (NOT FOR REPEATED BLOCK) */
+                $(".repeat-block-transport").html(`
+                <input type="text" name="latLong[]" value="${PUBLIC_TRANSPORT[0].latLong}" class="latLong" placeholder="Latitude, longitude" />
+                <input type="text" name="stop[]" value="${PUBLIC_TRANSPORT[0].stop}" placeholder="Arrêt" />
+                <select name="transport[]" style="padding: 11px 12px;">
+                    <option>Type de transport</option>
+                    <option ${PUBLIC_TRANSPORT[0].transport === "Station de métro" && "selected"} value="Station de métro">Station de métro</option>
+                    <option ${PUBLIC_TRANSPORT[0].transport === "Arrêt de bus" && "selected"} value="Arrêt de bus">Arrêt de bus</option>
+                    <option ${PUBLIC_TRANSPORT[0].transport === "Arrêt de tram" && "selected"} value="Arrêt de tram">Arrêt de tram</option>
+                    <option ${PUBLIC_TRANSPORT[0].transport === "Gare" && "selected"} value="Gare">Gare</option>
+                </select>
+                <input type="text" name="auto[]" value="${PUBLIC_TRANSPORT[0].auto}" placeholder="Durée en voiture" />
+                <input type="text" name="foot[]" value="${PUBLIC_TRANSPORT[0].foot}" placeholder="Durée à pied" />
+                <select name="type[]" style="padding: 11px 12px;">
+                    <option value="">compagnie</option>
+                    <option ${PUBLIC_TRANSPORT[0].type === "STIB" && "selected"} value="STIB">STIB</option>
+                    <option ${PUBLIC_TRANSPORT[0].type === "LIJN" && "selected"} value="LIJN">LIJN</option>
+                    <option ${PUBLIC_TRANSPORT[0].type === "SNCB" && "selected"} value="SNCB">SNCB</option>
+                    <option ${PUBLIC_TRANSPORT[0].type === "TEC" && "selected"} value="TEC">TEC</option>
+                </select>
+                <br />
+                <input type="text" style="width:100%;" placeholder="Numéros de ligne (Après chaque saisie il faut cliquer sur la touche entrée)" class="form-control numbers initNumber" name="numbers[]" value="${PUBLIC_TRANSPORT[0].numbers}" />`);
+
+                /* INITIALIZE THE FIRST LINE FOR TAGS SCRIPT */
+                var tagInputEle = $('.initNumber');
+                tagInputEle.tagsinput();
+
+                /* INITIALIZE DATAS */
+                var i = 0;
+                var numbers = ['1.svg', '2.svg', '3.svg', '4.svg', '5.svg', '6.svg'];
+                var numbersInMaps = ['11.svg', '12.svg', '13.svg', '14.svg', '15.svg', '16.svg'];
+
+                /* CREATE AUTO LINES IF IMPORT FROM JSON */
+                PUBLIC_TRANSPORT.slice(1).map((el) => {
+                    var rand = Math.random().toString(36).slice(2);
+                    $(".content-transport-block").append(
+                        '<div class="margin-bottom-5 t' + rand + ' margin-bottom-5' +
+                        el.id +
+                        '">' +
+                        repeatBlock(el) +
+                        '<span class="delete-it cursor-pointer">X</span></div>'
+                    );
+
+                    var tagInputEle = $('.t' + rand + ' .numbers');
+                    tagInputEle.tagsinput();
+
+                    $(".delete-it").click(function () {
+                        $(this).parent().remove();
+                        JSONobj.PUBLIC_TRANSPORT = JSONobj.PUBLIC_TRANSPORT.filter((el2) => el2.id !== el.id);
+                    });
+                });
+
+                /* RESET ALL DATAS => THE FUNCTION IS AT THE BOTTOM */
+                $('.reset-transport').click();
+
+                /* AUTO CLICK IF IMPORT FROM JSON AND PUT ALL DATAS IL SIDE BLOCK & MAPS => THE FUNCTION IS AT THE BOTTOM */
+                $('.validate-transport').click();
+
+            }
+            return;
+        }
+    };
+
+    $('.repeat-block-transport').html(repeatBlock(el = null));
+
+    /* ADD NEW TRANSPORT */
+    $('.add-new-transport').click(function () {
+        var rand = Math.random().toString(36).slice(2);
+        $('.content-transport-block').append('<div class="margin-bottom-5 t' + rand + '">' + repeatBlock(el = null) + '<span class="delete-it cursor-pointer">X</span></div>');
+
+        var tagInputEle = $('.t' + rand + ' .numbers');
+        tagInputEle.tagsinput();
+
+        /* DELETE TRANSPORT LINE */
+        $('.delete-it').click(function () {
+            $(this).parent().remove();
+        });
+    });
+
+    /* VALIDATE TRANSPORT IN MAPS */
+    $('.validate-transport').click(function () {
+        var i = 0;
+        var numbers = ['1.svg', '2.svg', '3.svg', '4.svg', '5.svg', '6.svg'];
+        var numbersInMaps = ['11.svg', '12.svg', '13.svg', '14.svg', '15.svg', '16.svg'];
+        var titleArray = [];
+        $("select[name='transport[]'] option:selected").each(function () {
+            titleArray.push($(this).val());
+        });
+        var stopArray = [];
+        $("input[name='stop[]']").map(function () {
+            stopArray.push($(this).val());
+        });
+        var autoArray = [];
+        $("input[name='auto[]']").map(function () {
+            autoArray.push($(this).val());
+        });
+        var footArray = [];
+        $("input[name='foot[]']").map(function () {
+            footArray.push($(this).val());
+        });
+        var typeArray = [];
+        $("select[name='type[]'] option:selected").each(function () {
+            typeArray.push($(this).val());
+        });
+
+        var numbersArray = [];
+        $("input[name='numbers[]']").map(function () {
+            numbersArray.push($(this).val());
+        });
+
+        $("input[name='latLong[]']").map(function () {
+            var getData = $(this).val();
+            var array = getData.split(",");
+            var newLatLng = new google.maps.LatLng(array[0], array[1]);
+            if (marker != undefined) {
+                marker.setPosition(newLatLng);
+            } else {
+
+                var content = `<tr>
+                        <td style="width:55%;"><p>
+                            <img src="assets/img/`+ numbersInMaps[i] + `" class="max-width-35" alt="" />
+                            <span>
+                                <strong>`+ stopArray[i] + `</strong>
+                                <br /><span style="padding-top:4px;"><small>`;
+                if (titleArray[i] == 'Station de métro') {
+                    content += `<strong style="font-weight:normal;" class="station-metro">` + titleArray[i] + `</strong>`;
+                } else if (titleArray[i] == 'Arrêt de bus') {
+                    content += `<strong style="font-weight:normal;" class="station-metro">` + titleArray[i] + `</strong>`;
+                } else if (titleArray[i] == 'Arrêt de tram') {
+                    content += `<strong style="font-weight:normal;" class="station-metro">` + titleArray[i] + `</strong>`;
+                } else if (titleArray[i] == 'Gare') {
+                    content += `<strong style="font-weight:normal;" class="station-metro">` + titleArray[i] + `</strong>`;
+                }
+
+                content += `&nbsp;`;
+
+                if (autoArray[i].length) {
+                    content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                }
+
+                if (footArray[i].length) {
+                    content += `<img src="assets/img/Walking.svg" class="foot" 
+                    `;
+                    if (!autoArray[i].length) {
+                        content += ` style="margin-left:0; "`;
+                    }
+                    content += `alt="" /> &nbsp;
+                                    `+ footArray[i] + ` min`;
+                }
+
+                content += `</small></span></span></p></td>
+                        <td style="text-align:center;">
+                            <p><span>`;
+
+                if (typeArray[i] == 'STIB') {
+                    content += `<img src="assets/img/stib.svg" class="max-width-45" alt="" />`;
+                } else if (typeArray[i] == 'LIJN') {
+                    content += `<img src="assets/img/lijn.svg" class="max-width-45" alt="" />`;
+                } else if (typeArray[i] == 'TEC') {
+                    content += `<img src="assets/img/tec.svg" class="max-width-45" alt="" />`;
+                } else {
+                    content += `<img src="assets/img/sncb.svg" class="max-width-45" alt="" />`;
+                }
+
+                var contentNumbers = '';
+                numbersArray[i].split(',').forEach(function (item) {
+                    if (item.length > 0) {
+                        contentNumbers += "<span class='spanNumber'>" + item + "</span>";
+                    }
+                });
+
+
+                content += `</p></td>
+                        <td>
+                            `+ contentNumbers + `
+                        </td>
+                    </tr>`;
+
+                $('.transport-content').append(content);
+
+                var marker = new google.maps.Marker({
+                    position: newLatLng,
+                    map: map,
+                    zIndex: 999,
+                    icon: {
+                        url: 'assets/img/' + numbers[i],
+                        scaledSize: new google.maps.Size(40, 40),
+                    },
+                    draggable: true,
+                    category: "transport"
+                });
+                marker.set('category', "transport");
+                markers.push(marker);
+
+                JSONobj.PUBLIC_TRANSPORT = [
+                    ...JSONobj.PUBLIC_TRANSPORT.filter((el) => el.id !== i),
+                    {
+                        id: i,
+                        latLong: $(this).val(),
+                        stop: stopArray[i],
+                        transport: titleArray[i],
+                        auto: autoArray[i],
+                        foot: footArray[i],
+                        type: typeArray[i],
+                        numbers: numbersArray[i]
+                    },
+                ];
+
+                i++;
+            }
+        }).get();
+    });
+
+    /* RESET TRANSPORT */
+    $('.reset-transport').click(function () {
+        $('.transport-content').html('');
+        clearMarkers("transport");
+    });
+
+    /* REPEAT BLOCK FOR COMMERCE */
+    function repeatBlockCommerce(el) {
+        return `<input type="text" name="latLongCommerce[]" value="${el ? el?.latLongCommerce : ''}" class="latLong" placeholder="Latitude, longitude" />
+            <input type="text" name="commerce[]" value="${el ? el?.commerce : ''}" placeholder="Nom du commerce" />
+            <input type="text" name="autoCommerce[]" value="${el ? el?.autoCommerce : ''}" placeholder="Durée en voiture" />
+            <input type="text" name="footCommerce[]" value="${el ? el?.footCommerce : ''}" placeholder="Durée à pied" />
+            <select name="typeCommerce[]" style="padding: 11px 12px;">
+                <option value="" selected>Pas de logo</option>
+                <option ${el ? el?.typeCommerce === "Carrefour" && "selected" : ''} value="Carrefour">Carrefour</option>
+                <option ${el ? el?.typeCommerce === "Delhaize" && "selected" : ''} value="Delhaize">Delhaize</option>
+                <option ${el ? el?.typeCommerce === "Colruyt" && "selected" : ''} value="Colruyt">Colruyt</option>
+                <option ${el ? el?.typeCommerce === "Boucherie" && "selected" : ''} value="Boucherie">Boucherie</option>
+                <option ${el ? el?.typeCommerce === "Boulangerie" && "selected" : ''} value="Boulangerie">Boulangerie</option>
+            </select>`;
+    }
+
+    /* CREATE BLOCK COMMERCE WITH JSON */
+    const CreateBlockCommerceWithJSON = (SHOPS) => {
+        if (!!SHOPS) {
+            if (SHOPS[0]) {
+
+                /* THIS BLOCK IS FOR THE FIRST DIV (NOT FOR REPEATED BLOCK) */
+                $(".repeat-block-commerce").html(`
+                    <input type="text" name="latLongCommerce[]" value="${SHOPS[0].latLongCommerce}" class="latLong" placeholder="Latitude, longitude" />
+                    <input type="text" name="commerce[]" value="${SHOPS[0].commerce}" placeholder="Nom du commerce" />
+                    <input type="text" name="autoCommerce[]" value="${SHOPS[0].autoCommerce}" placeholder="Durée en voiture" />
+                    <input type="text" name="footCommerce[]" value="${SHOPS[0].footCommerce}" placeholder="Durée à pied" />
+                    <select name="typeCommerce[]" style="padding: 11px 12px;">
+                        <option value="" selected>Pas de logo</option>
+                        <option ${SHOPS[0].typeCommerce === "Carrefour" && "selected"} value="Carrefour">Carrefour</option>
+                        <option ${SHOPS[0].typeCommerce === "Delhaize" && "selected"} value="Delhaize">Delhaize</option>
+                        <option ${SHOPS[0].typeCommerce === "Colruyt" && "selected"} value="Colruyt">Colruyt</option>
+                        <option ${SHOPS[0].typeCommerce === "Boucherie" && "selected"} value="Boucherie">Boucherie</option>
+                        <option ${SHOPS[0].typeCommerce === "Boulangerie" && "selected"} value="Boulangerie">Boulangerie</option>
+                    </select>
+                `);
+
+                /* INITIALIZE DATAS */
+                var i = 0;
+                var j = 0;
+                var k = 1;
+                var l = 1;
+                var numbersInMaps = ['red-1.svg', 'red-12.svg', 'red-13.svg', 'red-4.svg', 'red-5.svg', 'red-6.svg'];
+                var numbers = ['red-11.svg', 'red-2.svg', 'red-3.svg', 'red-14.svg', 'red-15.svg', 'red-16.svg'];
+
+                /* CREATE AUTO LINES IF IMPORT FROM JSON */
+                SHOPS.slice(1).map((el) => {
+                    $(".content-commerce-block").append(
+                        '<div class="margin-bottom-5 margin-bottom-5' +
+                        el.id +
+                        '">' +
+                        repeatBlockCommerce(el) +
+                        '<span class="delete-it cursor-pointer">X</span></div>'
+                    );
+                    $(".delete-it").click(function () {
+                        $(this).parent().remove();
+                        JSONobj.SHOPS = JSONobj.SHOPS.filter((el2) => el2.id !== el.id);
+                    });
+                });
+
+                /* RESET ALL DATAS => THE FUNCTION IS AT THE BOTTOM */
+                $('.reset-commerce').click();
+
+                /* AUTO CLICK IF IMPORT FROM JSON AND PUT ALL DATAS IL SIDE BLOCK & MAPS => THE FUNCTION IS AT THE BOTTOM */
+                $('.validate-commerce').click();
+
+            }
+            return;
+        }
+    };
+
+    $('.repeat-block-commerce').html(repeatBlockCommerce(el = null));
+
+    /* ADD NEW COMMERCE */
+    $('.add-new-commerce').click(function () {
+        $('.content-commerce-block').append('<div class="margin-bottom-5">' + repeatBlockCommerce(el = null) + '<span class="delete-it delete-it-2 cursor-pointer">X</span></div>');
+        /* DELETE COMMERCE LINE */
+        $('.delete-it').click(function () {
+            $(this).parent().remove();
+        });
+    });
+
+    /* VALIDATE COMMERCE IN MAPS */
+    $('.validate-commerce').click(function () {
+        var i = 0;
+        var j = 0;
+        var k = 1;
+        var l = 1;
+        var numbersInMaps = ['red-1.svg', 'red-12.svg', 'red-13.svg', 'red-4.svg', 'red-5.svg', 'red-6.svg'];
+        var numbers = ['red-11.svg', 'red-2.svg', 'red-3.svg', 'red-14.svg', 'red-15.svg', 'red-16.svg'];
+        var titleArray = [];
+        $("input[name='commerce[]']").map(function () {
+            titleArray.push($(this).val());
+        });
+        var autoArray = [];
+        $("input[name='autoCommerce[]']").map(function () {
+            autoArray.push($(this).val());
+        });
+        var footArray = [];
+        $("input[name='footCommerce[]']").map(function () {
+            footArray.push($(this).val());
+        });
+        var typeArray = [];
+        $("select[name='typeCommerce[]'] option:selected").each(function () {
+            typeArray.push($(this).val());
+        });
+        $("input[name='latLongCommerce[]']").map(function () {
+            var getData = $(this).val();
+            var array = getData.split(",");
+            var newLatLng = new google.maps.LatLng(array[0], array[1]);
+            if (marker != undefined) {
+                marker.setPosition(newLatLng);
+                console.log('erreur !');
+            } else {
+
+                if (typeArray[i] == "Boucherie" || typeArray[i] == "Boulangerie") {
+                    var content = `<tr>
+                        <td>`;
+                    content += `<p class="overflow-hidden">`;
+                    if (typeArray[i] == 'Boucherie') {
+                        content += `<img src="assets/img/Boucherie2.svg" class="max-width-35" alt="" /><span class="spanNumber2">` + k + `</span>`;
+                    } else {
+                        content += `<img src="assets/img/Boulangerie2.svg" class="max-width-35" alt="" /><span class="spanNumber2">` + l + `</span>`;
+                    }
+                    content += `
+                            <span>
+                                <span style="padding-bottom:4px;"><strong>`+ titleArray[i] + `</strong></span><br /><small>`;
+
+                    if (autoArray[i].length) {
+                        content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                    }
+
+                    if (footArray[i].length) {
+                        content += `<img src="assets/img/Walking.svg" class="foot" 
+                        `;
+                        if (!autoArray[i].length) {
+                            content += ` style="margin-left:0; "`;
+                        }
+                        content += `alt="" /> &nbsp;
+                                    `+ footArray[i] + ` min`;
+                    }
+
+                    content += `</small></span></p></td></tr>`;
+
+                    if (typeArray[i] == "Boucherie") {
+                        $('.commerce-content-2').append(content);
+                    } else if (typeArray[i] == "Boulangerie") {
+                        $('.commerce-content-3').append(content);
+                    }
+
+                    if (typeArray[i] == "Boucherie") {
+                        var img = 'assets/img/Boucherie.svg';
+                        var labelLetter = "" + k + "";
+                        k++;
+                    } else if (typeArray[i] == "Boulangerie") {
+                        var img = 'assets/img/Boulangerie.svg';
+                        var labelLetter = "" + l + "";
+                        l++;
+                    }
+
+                    var marker = new google.maps.Marker({
+                        position: newLatLng,
+                        map: map,
+                        zIndex: 999,
+                        icon: {
+                            url: img,
+                            scaledSize: new google.maps.Size(40, 40),
+                        },
+                        label: { text: labelLetter, className: "labelMap" },
+                        draggable: true
+                    });
+                    marker.set('category', "commerce");
+                    markers.push(marker);
+                } else {
+                    var content = `<tr>
+                        <td>`;
+                    content += `<p class="overflow-hidden">`;
+
+                    content += `<img src="assets/img/` + numbersInMaps[j] + `" class="max-width-35" alt="" />`;
+                    content += `
+                            <span>
+                                <span style="padding-bottom:4px;"><strong>`+ titleArray[i] + `</strong></span><br /><small>`;
+
+                    if (autoArray[i].length) {
+                        content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                    }
+
+                    if (footArray[i].length) {
+                        content += `<img src="assets/img/Walking.svg" class="foot" 
+                        `;
+                        if (!autoArray[i].length) {
+                            content += ` style="margin-left:0; "`;
+                        }
+                        content += `alt="" /> &nbsp;
+                                    `+ footArray[i] + ` min`;
+                    }
+
+                    content += `</small></span></p></td>
+                        <td><p>
+                            <span>`;
+
+                    if (typeArray[i] == 'Carrefour') {
+                        content += `<img src="assets/img/carefoor.svg" class="max-width-45" alt="" />`;
+                    } else if (typeArray[i] == 'Delhaize') {
+                        content += `<img src="assets/img/delheiz.svg" class="max-width-45" alt="" />`;
+                    } else if (typeArray[i] == 'Colruyt') {
+                        content += `<img src="assets/img/cloryt.svg" class="max-width-45" alt="" />`;
+                    } else {
+                        content += ``;
+                    }
+
+                    content += `</span></p></td>
+                    </tr>`;
+                    $('.commerce-content').append(content);
+
+                    var img = 'assets/img/' + numbers[j];
+
+                    var marker = new google.maps.Marker({
+                        position: newLatLng,
+                        map: map,
+                        zIndex: 999,
+                        icon: {
+                            url: img,
+                            scaledSize: new google.maps.Size(40, 40),
+                        },
+                        draggable: true
+                    });
+                    marker.set('category', "commerce");
+                    markers.push(marker);
+                    j++;
+                }
+
+                JSONobj.SHOPS = [
+                    ...JSONobj.SHOPS.filter((el) => el.id !== i),
+                    {
+                        id: i,
+                        latLongCommerce: $(this).val(),
+                        commerce: titleArray[i],
+                        autoCommerce: autoArray[i],
+                        footCommerce: footArray[i],
+                        typeCommerce: typeArray[i],
+                    },
+                ];
+
+                i++;
+            }
+        }).get();
+    });
+
+    /* RESET COMMERCE */
+    $('.reset-commerce').click(function () {
+        $('.commerce-content').html('');
+        $('.commerce-content-2').html('');
+        $('.commerce-content-3').html('');
+        clearMarkers("commerce");
+    });
+
+    /* REPEAT BLOCK FOR RESTAURANT */
+    function repeatBlockRestaurant(el) {
+        return `<input type="text" name="latLongRestaurant[]" value="${el ? el?.latLongRestaurant : ''}" class="latLong" placeholder="Latitude, longitude" />
+        <input type="text" name="restaurant[]" value="${el ? el?.restaurant : ''}" placeholder="Nom du restaurant" />
+        <input type="text" name="autoRestaurant[]" value="${el ? el?.autoRestaurant : ''}" placeholder="Durée en voiture" />
+        <input type="text" name="footRestaurant[]" value="${el ? el?.footRestaurant : ''}" placeholder="Durée à pied" />`;
+    }
+
+    /* CREATE BLOCK RESTAURANT WITH JSON */
+    const CreateBlockRestaurantWithJSON = (RESTAURANT) => {
+        if (!!RESTAURANT) {
+            if (RESTAURANT[0]) {
+
+                /* THIS BLOCK IS FOR THE FIRST DIV (NOT FOR REPEATED BLOCK) */
+                $(".repeat-block-restaurant").html(`
+                <input type="text" name="latLongRestaurant[]" value="${RESTAURANT[0].latLongRestaurant}" class="latLong" placeholder="Latitude, longitude" />
+                <input type="text" name="restaurant[]" value="${RESTAURANT[0].restaurant}" placeholder="Nom du restaurant" />
+                <input type="text" name="autoRestaurant[]" value="${RESTAURANT[0].autoRestaurant}" placeholder="Durée en voiture" />
+                <input type="text" name="footRestaurant[]" value="${RESTAURANT[0].footRestaurant}" placeholder="Durée à pied" />`);
+
+                /* INITIALIZE DATAS */
+                var i = 0;
+                var numbersInMaps = ['yellow-1.svg', 'yellow-2.svg', 'yellow-3.svg', 'yellow-4.svg', 'yellow-5.svg', 'yellow-6.svg'];
+                var numbers = ['yellow-11.svg', 'yellow-12.svg', 'yellow-13.svg', 'yellow-14.svg', 'yellow-15.svg', 'yellow-16.svg'];
+
+                /* CREATE AUTO LINES IF IMPORT FROM JSON */
+                RESTAURANT.slice(1).map((el) => {
+                    $(".content-restaurant-block").append(
+                        '<div class="margin-bottom-5 margin-bottom-5' +
+                        el.id +
+                        '">' +
+                        repeatBlockRestaurant(el) +
+                        '<span class="delete-it cursor-pointer">X</span></div>'
+                    );
+                    $(".delete-it").click(function () {
+                        $(this).parent().remove();
+                        JSONobj.RESTAURANT = JSONobj.RESTAURANT.filter((el2) => el2.id !== el.id);
+                    });
+                });
+
+                /* RESET ALL DATAS => THE FUNCTION IS AT THE BOTTOM */
+                $('.reset-restaurant').click();
+
+                /* AUTO CLICK IF IMPORT FROM JSON AND PUT ALL DATAS IL SIDE BLOCK & MAPS => THE FUNCTION IS AT THE BOTTOM */
+                $('.validate-restaurant').click();
+
+            }
+            return;
+        }
+    };
+
+    $('.repeat-block-restaurant').html(repeatBlockRestaurant(el = null));
+
+    /* ADD NEW RESTAURANT */
+    $('.add-new-restaurant').click(function () {
+        $('.content-restaurant-block').append('<div class="margin-bottom-5">' + repeatBlockRestaurant(el = null) + '<span class="delete-it delete-it-2 cursor-pointer">X</span></div>');
+        /* DELETE RESTAURANT LINE */
+        $('.delete-it').click(function () {
+            $(this).parent().remove();
+        });
+    });
+
+    /* VALIDATE RESTAURANT IN MAPS */
+    $('.validate-restaurant').click(function () {
+        var i = 0;
+        var numbersInMaps = ['yellow-1.svg', 'yellow-2.svg', 'yellow-3.svg', 'yellow-4.svg', 'yellow-5.svg', 'yellow-6.svg'];
+        var numbers = ['yellow-11.svg', 'yellow-12.svg', 'yellow-13.svg', 'yellow-14.svg', 'yellow-15.svg', 'yellow-16.svg'];
+        var titleArray = [];
+        $("input[name='restaurant[]']").map(function () {
+            titleArray.push($(this).val());
+        });
+        var autoArray = [];
+        $("input[name='autoRestaurant[]']").map(function () {
+            autoArray.push($(this).val());
+        });
+        var footArray = [];
+        $("input[name='footRestaurant[]']").map(function () {
+            footArray.push($(this).val());
+        });
+        $("input[name='latLongRestaurant[]']").map(function () {
+            var getData = $(this).val();
+            var array = getData.split(",");
+            var newLatLng = new google.maps.LatLng(array[0], array[1]);
+            if (marker != undefined) {
+                marker.setPosition(newLatLng);
+            } else {
+
+                var content = `<p class="overflow-hidden  width-49-display-inline-block" style="margin-top:0;">
+                            <img src="assets/img/`+ numbersInMaps[i] + `" class="max-width-35" alt="" />
+                            <span>
+                                <span style="padding-bottom:4px;"><strong>`+ titleArray[i] + `</strong></span><br /><small>`;
+
+                if (autoArray[i].length) {
+                    content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                }
+
+                if (footArray[i].length) {
+                    content += `<img src="assets/img/Walking.svg" class="foot" 
+                    `;
+                    if (!autoArray[i].length) {
+                        content += ` style="margin-left:0; "`;
+                    }
+                    content += `alt="" /> &nbsp;
+                                    `+ footArray[i] + ` min</small></span>`;
+                }
+
+                content += `</p>`;
+
+                $('.restaurant-content').append(content);
+
+                var marker = new google.maps.Marker({
+                    position: newLatLng,
+                    map: map,
+                    zIndex: 999,
+                    icon: {
+                        url: 'assets/img/' + numbers[i],
+                        scaledSize: new google.maps.Size(40, 40),
+                    },
+                    draggable: true
+                });
+                marker.set('category', "restaurant");
+                markers.push(marker);
+
+                JSONobj.RESTAURANT = [
+                    ...JSONobj.RESTAURANT.filter((el) => el.id !== i),
+                    {
+                        id: i,
+                        latLongRestaurant: $(this).val(),
+                        restaurant: titleArray[i],
+                        autoRestaurant: autoArray[i],
+                        footRestaurant: footArray[i]
+                    },
+                ];
+
+                i++;
+            }
+        }).get();
+    });
+
+    /* RESET RESTAURANT */
+    $('.reset-restaurant').click(function () {
+        $('.restaurant-content').html('');
+        clearMarkers("restaurant");
+    });
+
+    /* REPEAT BLOCK FOR AXES */
+    function repeatBlockAxes(el) {
+        return `
+        <input type="text" name="latLongMainRoads[]" value="${el ? el?.latLongMainRoads : ''}" class="latLong" placeholder="Latitude, longitude" />
+        <input type="text" name="mainRoads[]" value="${el ? el?.mainRoads : ''}" placeholder="Nom de l'axe" />
+        <input type="text" name="autoMainRoads[]" value="${el ? el?.autoMainRoads : ''}" placeholder="Durée en voiture" />
+        `;
+    }
+
+    /* CREATE BLOCK AXES WITH JSON */
+    const CreateBlockAxesWithJSON = (MAIN_ROADS) => {
+        if (!!MAIN_ROADS) {
+            if (MAIN_ROADS[0]) {
+
+                /* THIS BLOCK IS FOR THE FIRST DIV (NOT FOR REPEATED BLOCK) */
+                $(".repeat-block-axes").html(`
+                <input type="text" name="latLongMainRoads[]" value="${MAIN_ROADS[0].latLongMainRoads}" class="latLong" placeholder="Latitude, longitude" />
+                <input type="text" name="mainRoads[]" value="${MAIN_ROADS[0].mainRoads}" placeholder="Nom de l'axe" />
+                <input type="text" name="autoMainRoads[]" value="${MAIN_ROADS[0].autoMainRoads}" placeholder="Durée en voiture" />`);
+
+                /* INITIALIZE DATAS */
+                var i = 0;
+                var numbersInMaps = ['V11.svg', 'V22.svg', 'V33.svg', 'V44.svg', 'V55.svg', 'V66.svg'];
+                var numbers = ['V1.svg', 'V2.svg', 'V3.svg', 'V4.svg', 'V5.svg', 'V6.svg'];
+
+                /* CREATE AUTO LINES IF IMPORT FROM JSON */
+                MAIN_ROADS.slice(1).map((el) => {
+                    $(".content-axes-block").append(
+                        '<div class="margin-bottom-5 margin-bottom-5' +
+                        el.id +
+                        '">' +
+                        repeatBlockAxes(el) +
+                        '<span class="delete-it cursor-pointer">X</span></div>'
+                    );
+                    $(".delete-it").click(function () {
+                        $(this).parent().remove();
+                        JSONobj.MAIN_ROADS = JSONobj.MAIN_ROADS.filter((el2) => el2.id !== el.id);
+                    });
+                });
+
+                /* RESET ALL DATAS => THE FUNCTION IS AT THE BOTTOM */
+                $('.reset-axes').click();
+
+                /* AUTO CLICK IF IMPORT FROM JSON AND PUT ALL DATAS IL SIDE BLOCK & MAPS => THE FUNCTION IS AT THE BOTTOM */
+                $('.validate-axes').click();
+
+            }
+            return;
+        }
+    };
+
+    $('.repeat-block-axes').html(repeatBlockAxes(el = null));
+
+    /* ADD NEW AXES */
+    $('.add-new-axes').click(function () {
+        $('.content-axes-block').append('<div class="margin-bottom-5">' + repeatBlockAxes(el = null) + '<span class="delete-it delete-it-2 cursor-pointer">X</span></div>');
+        /* DELETE AXES LINE */
+        $('.delete-it').click(function () {
+            $(this).parent().remove();
+        });
+    });
+
+    /* VALIDATE AXES IN MAPS */
+    $('.validate-axes').click(function () {
+        var i = 0;
+        var numbersInMaps = ['V11.svg', 'V22.svg', 'V33.svg', 'V44.svg', 'V55.svg', 'V66.svg'];
+        var numbers = ['V1.svg', 'V2.svg', 'V3.svg', 'V4.svg', 'V5.svg', 'V6.svg'];
+        var titleArray = [];
+        $("input[name='mainRoads[]']").map(function () {
+            titleArray.push($(this).val());
+        });
+        var autoArray = [];
+        $("input[name='autoMainRoads[]']").map(function () {
+            autoArray.push($(this).val());
+        });
+        $("input[name='latLongMainRoads[]']").map(function () {
+            var getData = $(this).val();
+            var array = getData.split(",");
+            var newLatLng = new google.maps.LatLng(array[0], array[1]);
+            if (marker != undefined) {
+                marker.setPosition(newLatLng);
+            } else {
+
+                var content = `<p class="overflow-hidden  width-49-display-inline-block" style="margin-top:0;">
+                            <img src="assets/img/`+ numbersInMaps[i] + `" class="max-width-35" alt="" />
+                            <span>
+                                <span style="padding-bottom:4px;"><strong>`+ titleArray[i] + `</strong></span><br /><small>`;
+
+                if (autoArray[i].length) {
+                    content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                }
+
+                content += `</p>`;
+
+                $('.axes-content').append(content);
+
+                var marker = new google.maps.Marker({
+                    position: newLatLng,
+                    map: map,
+                    zIndex: 999,
+                    icon: {
+                        url: 'assets/img/' + numbers[i],
+                        scaledSize: new google.maps.Size(40, 40),
+                    },
+                    draggable: true
+                });
+                marker.set('category', "axes");
+                markers.push(marker);
+
+                JSONobj.MAIN_ROADS = [
+                    ...JSONobj.MAIN_ROADS.filter((el) => el.id !== i),
+                    {
+                        id: i,
+                        latLongMainRoads: $(this).val(),
+                        mainRoads: titleArray[i],
+                        autoMainRoads: autoArray[i]
+                    },
+                ];
+
+                i++;
+            }
+        }).get();
+    });
+
+    /* RESET AXES */
+    $('.reset-axes').click(function () {
+        $('.axes-content').html('');
+        clearMarkers("axes");
+    });
+
+    /* REPEAT BLOCK FOR AUTRES */
+    function repeatBlockAutres(el) {
+        return `
+        <select name="typeAutres[]" style="padding: 11px 12px;">
+            <option ${el ? el?.typeAutres === "chateau" && "selected" : ''} value="chateau">Château</option>
+            <option ${el ? el?.typeAutres === "Manege" && "selected" : ''} value="Manege">Manége</option>
+            <option ${el ? el?.typeAutres === "park" && "selected" : ''} value="park">Parc</option>
+            <option ${el ? el?.typeAutres === "Salle-de-sport" && "selected" : ''} value="Salle-de-sport">Salle de sport</option>
+            <option ${el ? el?.typeAutres === "Pharmacie" && "selected" : ''} value="Pharmacie">Pharmacie</option>
+            <option ${el ? el?.typeAutres === "universite" && "selected" : ''} value="universite">Université</option>
+            <option ${el ? el?.typeAutres === "espace-vert" && "selected" : ''} value="espace-vert">Espace vert</option>
+            <option ${el ? el?.typeAutres === "ecole" && "selected" : ''} value="ecole">École</option>
+            <option ${el ? el?.typeAutres === "hopital" && "selected" : ''} value="hopital">Hôpital</option>
+            <option ${el ? el?.typeAutres === "musee" && "selected" : ''} value="musee">Musée</option>
+            <option ${el ? el?.typeAutres === "centre-commercial" && "selected" : ''} value="centre-commercial">Centre commercial</option>
+        </select>
+        <input type="text" name="latLongAutres[]" value="${el ? el?.latLongAutres : ''}" class="latLong" placeholder="Latitude, longitude" />
+        <input type="text" name="autres[]" value="${el ? el?.autres : ''}" placeholder="Nom de l'endroit" />
+        <input type="text" name="autoAutres[]" value="${el ? el?.autoAutres : ''}" placeholder="Durée en voiture" />
+        <input type="text" name="footAutres[]" value="${el ? el?.footAutres : ''}" placeholder="Durée à pied" />
+        `;
+    }
+
+    /* CREATE BLOCK AUTRES WITH JSON */
+    const CreateBlockOthersWithJSON = (OTHERS) => {
+        if (!!OTHERS) {
+            if (OTHERS[0]) {
+
+                /* THIS BLOCK IS FOR THE FIRST DIV (NOT FOR REPEATED BLOCK) */
+                $(".repeat-block-autres").html(`
+                <select name="typeAutres[]" style="padding: 11px 12px;">
+                    <option ${OTHERS[0].typeAutres === "chateau" && "selected"} value="chateau">Château</option>
+                    <option ${OTHERS[0].typeAutres === "Manege" && "selected"} value="Manege">Manége</option>
+                    <option ${OTHERS[0].typeAutres === "park" && "selected"} value="park">Parc</option>
+                    <option ${OTHERS[0].typeAutres === "Salle-de-sport" && "selected"} value="Salle-de-sport">Salle de sport</option>
+                    <option ${OTHERS[0].typeAutres === "Pharmacie" && "selected"} value="Pharmacie">Pharmacie</option>
+                    <option ${OTHERS[0].typeAutres === "universite" && "selected"} value="universite">Université</option>
+                    <option ${OTHERS[0].typeAutres === "espace-vert" && "selected"} value="espace-vert">Espace vert</option>
+                    <option ${OTHERS[0].typeAutres === "ecole" && "selected"} value="ecole">École</option>
+                    <option ${OTHERS[0].typeAutres === "hopital" && "selected"} value="hopital">Hôpital</option>
+                    <option ${OTHERS[0].typeAutres === "musee" && "selected"} value="musee">Musée</option>
+                    <option ${OTHERS[0].typeAutres === "centre-commercial" && "selected"} value="centre-commercial">Centre commercial</option>
+                </select>
+                <input type="text" name="latLongAutres[]" value="${OTHERS[0].latLongAutres}" class="latLong" placeholder="Latitude, longitude" />
+                <input type="text" name="autres[]" value="${OTHERS[0].autres}" placeholder="Nom de l'endroit" />
+                <input type="text" name="autoAutres[]" value="${OTHERS[0].autoAutres}" placeholder="Durée en voiture" />
+                <input type="text" name="footAutres[]" value="${OTHERS[0].footAutres}" placeholder="Durée à pied" />`);
+
+                /* INITIALIZE DATAS */
+                var m = 1, n = 1, o = 1, p = 1, q = 1, r = 1, s = 1, t = 1, u = 1, v = 1, x = 1;
+                var i = 0;
+
+                /* CREATE AUTO LINES IF IMPORT FROM JSON */
+                OTHERS.slice(1).map((el) => {
+                    $(".content-autres-block").append(
+                        '<div class="margin-bottom-5 margin-bottom-5' +
+                        el.id +
+                        '">' +
+                        repeatBlockAutres(el) +
+                        '<span class="delete-it cursor-pointer">X</span></div>'
+                    );
+                    $(".delete-it").click(function () {
+                        $(this).parent().remove();
+                        JSONobj.OTHERS = JSONobj.OTHERS.filter((el2) => el2.id !== el.id);
+                    });
+                });
+
+                /* RESET ALL DATAS => THE FUNCTION IS AT THE BOTTOM */
+                $('.reset-autres').click();
+
+                /* AUTO CLICK IF IMPORT FROM JSON AND PUT ALL DATAS IL SIDE BLOCK & MAPS => THE FUNCTION IS AT THE BOTTOM */
+                $('.validate-autres').click();
+
+            }
+            return;
+        }
+    };
+
+    $('.repeat-block-autres').html(repeatBlockAutres(el = null));
+
+    /* ADD NEW AUTRES */
+    $('.add-new-autres').click(function () {
+        $('.content-autres-block').append('<div class="margin-bottom-5">' + repeatBlockAutres(el = null) + '<span class="delete-it delete-it-2 cursor-pointer">X</span></div>');
+        /* DELETE AUTRES LINE */
+        $('.delete-it').click(function () {
+            $(this).parent().remove();
+        });
+    });
+
+    /* VALIDATE AUTRES IN MAPS */
+    $('.validate-autres').click(function () {
+        var m = 1, n = 1, o = 1, p = 1, q = 1, r = 1, s = 1, t = 1, u = 1, v = 1, x = 1;
+        var i = 0;
+        var titleArray = [];
+        $("input[name='autres[]']").map(function () {
+            titleArray.push($(this).val());
+        });
+        var autoArray = [];
+        $("input[name='autoAutres[]']").map(function () {
+            autoArray.push($(this).val());
+        });
+        var footArray = [];
+        $("input[name='footAutres[]']").map(function () {
+            footArray.push($(this).val());
+        });
+        var typeAutresArray = [];
+        $("select[name='typeAutres[]'] option:selected").each(function () {
+            typeAutresArray.push($(this).val());
+        });
+        $("input[name='latLongAutres[]']").map(function () {
+            var getData = $(this).val();
+            var array = getData.split(",");
+            var newLatLng = new google.maps.LatLng(array[0], array[1]);
+            if (marker != undefined) {
+                marker.setPosition(newLatLng);
+            } else {
+
+                var content = `<p class="overflow-hidden  width-49-display-inline-block" style="margin-bottom:12px;">`;
+
+                content += `<img src="assets/img/` + typeAutresArray[i] + `2.svg" class="max-width-35" alt="" />`;
+
+                if (typeAutresArray[i] == 'chateau') {
+                    content += `<span class="spanNumber2">` + m + `</span>`;
+                    var labelLetter = "" + m + "";
+                    m++;
+                } else if (typeAutresArray[i] == 'Manege') {
+                    content += `<span class="spanNumber2">` + n + `</span>`;
+                    var labelLetter = "" + n + "";
+                    n++;
+                } else if (typeAutresArray[i] == 'park') {
+                    content += `<span class="spanNumber2">` + o + `</span>`;
+                    var labelLetter = "" + o + "";
+                    o++;
+                } else if (typeAutresArray[i] == 'Salle-de-sport') {
+                    content += `<span class="spanNumber2">` + p + `</span>`;
+                    var labelLetter = "" + p + "";
+                    p++;
+                } else if (typeAutresArray[i] == 'Pharmacie') {
+                    content += `<span class="spanNumber2">` + q + `</span>`;
+                    var labelLetter = "" + q + "";
+                    q++;
+                } else if (typeAutresArray[i] == 'universite') {
+                    content += `<span class="spanNumber2">` + r + `</span>`;
+                    var labelLetter = "" + r + "";
+                    r++;
+                } else if (typeAutresArray[i] == 'espace-vert') {
+                    content += `<span class="spanNumber2">` + s + `</span>`;
+                    var labelLetter = "" + s + "";
+                    s++;
+                } else if (typeAutresArray[i] == 'ecole') {
+                    content += `<span class="spanNumber2">` + t + `</span>`;
+                    var labelLetter = "" + t + "";
+                    t++;
+                } else if (typeAutresArray[i] == 'hopital') {
+                    content += `<span class="spanNumber2">` + u + `</span>`;
+                    var labelLetter = "" + u + "";
+                    u++;
+                } else if (typeAutresArray[i] == 'musee') {
+                    content += `<span class="spanNumber2">` + v + `</span>`;
+                    var labelLetter = "" + v + "";
+                    v++;
+                } else if (typeAutresArray[i] == 'centre-commercial') {
+                    content += `<span class="spanNumber2">` + x + `</span>`;
+                    var labelLetter = "" + v + "";
+                    v++;
+                }
+
+                content += `<span>
+                                <span style="padding-bottom:4px;"><strong>`+ titleArray[i] + `</strong></span><br /><small>`;
+
+                if (autoArray[i].length) {
+                    content += `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                                    `+ autoArray[i] + ` min`;
+                }
+
+                if (footArray[i].length) {
+                    content += `<img src="assets/img/Walking.svg" class="foot"`;
+                    if (!autoArray[i].length) {
+                        content += ` style="margin-left:0; "`;
+                    }
+                    content += `alt="" /> &nbsp;
+                                    `+ footArray[i] + ` min</small></span>`;
+                }
+
+                content += `</p>`;
+
+
+                $('.autres-content').append(content);
+
+                var marker = new google.maps.Marker({
+                    position: newLatLng,
+                    map: map,
+                    zIndex: 999,
+                    icon: {
+                        url: 'assets/img/' + typeAutresArray[i] + '.svg',
+                        scaledSize: new google.maps.Size(40, 40),
+                    },
+                    zIndex: 999,
+                    label: { text: labelLetter, className: "labelMap" },
+                    draggable: true
+                });
+
+                marker.set('category', "autres");
+                markers.push(marker);
+
+                JSONobj.OTHERS = [
+                    ...JSONobj.OTHERS.filter((el) => el.id !== i),
+                    {
+                        id: i,
+                        latLongAutres: $(this).val(),
+                        autres: titleArray[i],
+                        autoAutres: autoArray[i],
+                        footAutres: footArray[i],
+                        typeAutres: typeAutresArray[i],
+                    },
+                ];
+
+                i++;
+            }
+        }).get();
+    });
+
+    /* RESET AUTRES */
+    $('.reset-autres').click(function () {
+        $('.autres-content').html('');
+        clearMarkers("autres");
+    });
+
+</script>
+
+<!-- TAGS -->
+<script>
+    $(document).ready(function () {
+        var tagInputEle = $('.numbers');
+        tagInputEle.tagsinput();
+    });
+</script>
+
+<script src="assets/js/jquery.MultiLanguage.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.MultiLanguage('language.json');
+    });
+
+    /* IF CHANGE LANGUAGE */
+    $('.changeLanguage').click(function () {
+        if ($(this).attr('id') == 'lang-fr') {
+            JSONobj.LANG = "FR";
+            $('#hiddenLanguage').val('FR');
+        } else if ($(this).attr('id') == 'lang-en') {
+            JSONobj.LANG = "EN";
+            $('#hiddenLanguage').val('EN');
+        } else if ($(this).attr('id') == 'lang-nl') {
+            JSONobj.LANG = "NL";
+            $('#hiddenLanguage').val('NL');
+        }
+    });
+</script>
+
+<script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-html2canvas@latest/dist/jspdf-html2canvas.min.js"></script>
+<!-- EXPORT TO PDF  -->
+<script type="text/javascript">
+    const exportPDF = () => {
+        html2PDF($("#contentApp"), {
+            jsPDF: {
+                format: [1920, 2017],
+            },
+            imageQuality: 99,
+            margin: {
+                top: 5,
+                right: 3,
+                bottom: 3,
+                left: 3,
+            },
+            html2canvas: {
+                dpi: 300,
+                scale: 4,
+                letterRendering: true,
+                useCORS: true,
+            },
+            DisablePdfCompression: 1,
+            imageType: "image/jpeg",
+            output: "Localisation - " + $("#ADDRESS").val() + ".pdf",
+        });
+    };
+</script>

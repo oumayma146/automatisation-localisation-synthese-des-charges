@@ -1,0 +1,444 @@
+@font-face {
+    font-family: "CairoSemiBold";
+    src: url("../font/CairoSemiBold600.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "CairoBold";
+    src: url("../font/CairoBold700.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "CairoRegular";
+    src: url("../font/CairoRegular400.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSansPro-SemiBold";
+    src: url("../font/SourceSansPro-SemiBold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSansProBold";
+    src: url("../font/SourceSansPro-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "SourceSansPro-Regular";
+    src: url("../font/SourceSansPro-Regular.ttf") format("truetype");
+}
+
+body {
+    font-family: "SourceSansPro-Regular";
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.car {
+    width: 30px;
+    margin-bottom: -4px;
+}
+
+.foot {
+    height: 17px;
+    width: auto;
+    margin-left: 10px;
+    margin-bottom: -4px;
+}
+
+.margin-auto {
+    margin: auto;
+}
+
+.overflow-hidden {
+    overflow: hidden;
+    padding-bottom: 10px;
+    padding-top: 5px;
+}
+
+.if-small {
+    display: none;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.width-100 {
+    width: 100%;
+    /* table-layout: fixed; */
+}
+
+.max-width-45 {
+    max-width: 45px;
+    height: 36px;
+    float: right;
+}
+
+.max-width-35 {
+    max-width: 35px;
+    margin-right: 10px;
+    float: left;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.note-editor {
+    z-index: 1;
+}
+
+.ui-datepicker {
+    z-index: 9999;
+}
+
+.max-width-85 {
+    max-width: 85px;
+}
+
+.overflow-hidden span {
+    display: inline-block;
+    justify-content: center;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+#legend {
+    text-align: center;
+    margin-top: -50px;
+    z-index: 9999;
+    position: relative;
+}
+
+img {
+    width: 100%;
+}
+
+.default-hide {
+    display: none;
+}
+
+button div {
+    display: none !important;
+}
+
+a {
+    /* color: #ffffff !important; */
+    font-size: 15px;
+}
+
+.bootstrap-tagsinput input {
+    width: 100% !important;
+}
+
+.font-size-14 {
+    font-size: 14px !important;
+}
+
+.font-size-15 {
+    font-size: 15px !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+p {
+    font-family: "SourceSansPro-Regular";
+    font-size: 14px;
+    color: #2E2B2B;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.localisation-address {
+    width: 397px;
+    height: 100px;
+    resize: none;
+    margin-top: 5px;
+    font-size: 14px;
+    font-family: "SourceSansPro-Regular";
+}
+
+input[type="text"],
+select,
+textarea {
+    padding: 8px 12px;
+
+}
+
+.delete-it {
+    color: #fff;
+    position: absolute;
+    margin-left: 10px;
+    background: red;
+    font-size: 15px;
+    margin-top: 4px;
+    padding: 8px 15px;
+}
+
+.delete-it-2 {
+    margin-top: 0 !important;
+}
+
+.spanNumber {
+    background: #4471b6;
+    padding: 3px 10px 5px;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.bootstrap-tagsinput .tag {
+    background: #333;
+    padding: 4px;
+    font-size: 14px;
+}
+
+.bootstrap-tagsinput {
+    border: 1px solid #333 !important;
+    box-shadow: none !important;
+    padding: 8px 12px !important;
+    margin-top: 5px !important;
+    color: initial !important;
+    border-radius: 2px !important;
+    width: 89.5% !important;
+    line-height: auto !important;
+}
+
+.quotite {
+    padding: 15px !important;
+    font-weight: bold;
+}
+
+.table-mensuelle {
+    width: 100%;
+}
+
+.table-mensuelle td {
+    border: solid 1px #fff;
+    font-weight: bold;
+}
+
+.table-mensuelle tr.bottom {
+    background: #ddd;
+}
+
+.width-49-display-inline-block {
+    width: 49%;
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.title-mensuelle,
+.center-padding,
+#quotites-background {
+    text-align: center;
+    padding: 8px 12px;
+}
+
+.title-mensuelle,
+.color-white {
+    color: #fff;
+}
+
+.content-mensuelle {
+    padding: 29px 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.validate-transport,
+.validate-commerce,
+.validate-autres,
+.validate-axes,
+.validate-ag,
+.validate-mensuelle,
+.validate-camembert,
+.validate-restaurant {
+    padding: 10px;
+    background: #0580af;
+    color: #fff;
+}
+
+#piechart {
+    margin-top: 20px;
+}
+
+#piechart div div {
+    text-align: center;
+    margin: auto;
+}
+
+.reset-transport,
+.reset-commerce,
+.reset-autres,
+.reset-axes,
+.reset-ag,
+.reset-camembert,
+.reset-restaurant {
+    padding: 10px;
+    background: red;
+    color: #fff;
+}
+
+.add-new-transport,
+.add-new-commerce,
+.add-new-autres,
+.add-new-axes,
+.add-new-ag,
+.add-new-camembert,
+.add-new-restaurant {
+    padding: 10px;
+    background: green;
+    color: #fff;
+}
+
+td {
+    padding-bottom: 10px;
+}
+
+.form {
+    padding: 10px;
+}
+
+.note-editor {
+    width: 80%;
+}
+
+.repeat-block-transport,
+.repeat-block-commerce,
+.repeat-block-autres,
+.repeat-block-axes,
+.repeat-block-restaurant,
+.margin-bottom-5 {
+    margin-bottom: 5px;
+}
+
+.app {
+    margin-top: 25px;
+    overflow: hidden;
+}
+
+.content-ag-block .note-editor.note-frame {
+    float: left;
+}
+
+.synthese-des-charges input[type="text"] {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+.synthese-des-charges .margin-bottom-5 {
+    overflow: hidden;
+}
+
+#map {
+    width: 58%;
+    float: left;
+    height: 1675px;
+    margin-right: 2%;
+}
+
+#content {
+    width: 35%;
+    float: right;
+    min-height: 1250px;
+    padding-top: 55px;
+    padding-right: 5%;
+    padding-bottom: 40px;
+}
+
+.number {
+    color: #fff;
+    padding: 5px 11px;
+    border-radius: 100%;
+    font-weight: bold;
+    margin-right: 5px;
+    float: left;
+}
+
+.spanNumber2 {
+    position: absolute;
+    background: white;
+    padding: 2px 6px;
+    border-radius: 100%;
+    margin-left: -25px;
+    margin-top: -7px;
+    font-size: 10px;
+    border: solid 1px #ddd;
+    color: #000;
+}
+
+.labelMap {
+    color: rgb(0, 0, 0) !important;
+    font-size: 8px !important;
+    margin-top: -23px;
+    background: #fff;
+    padding: 2px 5px;
+    position: absolute;
+    border-radius: 100%;
+    border: solid 1px #ddd;
+}
+
+.hr {
+    background-color: #A0A0A0;
+    width: 100%;
+    height: 1px;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.blue-497aed {
+    background: #497aed;
+}
+
+.red-eb3a5a {
+    background: #eb3a5a;
+}
+
+.yellow-ffb521 {
+    background: #ffb521;
+}
+
+.green-17a95c {
+    background: #17a95c;
+}
+
+.purple-854aa1 {
+    background: #854aa1;
+}
+
+.synthese-des-charges ul {
+    padding-left: 15px;
+}
+
+.synthese-des-charges ul {
+    list-style: none;
+}
+
+.synthese-des-charges ul li::before {
+    content: "\2022";
+    color: #000000;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
