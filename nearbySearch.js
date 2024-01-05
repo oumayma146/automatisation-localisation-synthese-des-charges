@@ -154,7 +154,6 @@ function handleRestaurantData(restaurantData, map) {
         footRestaurant: restaurant.foot,
       },
     ];
-
     i++;
   });
 }
@@ -232,6 +231,7 @@ function displayMallData(travel) {
     "Latitude,Longitude",
     "Durée en voiture",
     "Durée à pied",
+    "type de Commerce ",
   ];
 
   headings.forEach(function (headingText) {
@@ -241,7 +241,7 @@ function displayMallData(travel) {
   });
 
   table.appendChild(headerRow);
-
+console.log("travel",travel)
   travel.forEach(function (item) {
     var row = document.createElement("tr");
 
@@ -249,25 +249,33 @@ function displayMallData(travel) {
     var locationCell = document.createElement("td");
     var driveDurationCell = document.createElement("td");
     var walkDurationCell = document.createElement("td");
+    var typeCell = document.createElement("td");
 
-    placeCell.textContent = item[0].placeName;
-    locationCell.textContent = `${item[0].location}`;
-    driveDurationCell.textContent = item[0].duration;
-    walkDurationCell.textContent = item[1].duration;
+    placeCell.textContent = item.placeName;
+    locationCell.textContent = `${item.location}`;
+    driveDurationCell.textContent = item.auto;
+    walkDurationCell.textContent = item.foot;
+    if (item.type === "shopping_mall") {
+      typeCell.textContent = "Commerce";
+    } else if (item.type === "butcher") {
+      typeCell.textContent = "Boucherie";
+    } else {
+      typeCell.textContent = "Boulangerie";
+    }
 
     // Append cells to the row
     row.appendChild(placeCell);
     row.appendChild(locationCell);
     row.appendChild(driveDurationCell);
     row.appendChild(walkDurationCell);
+    row.appendChild(typeCell);
 
     // Append the row to the table
     table.appendChild(row);
   });
   document.getElementById("table-mall-container").appendChild(table);
 }
-
-function handleCommerceData(results, map) {
+function handleData(flattenedResults, map) {
   var i = 0;
   var numbersInMaps = [
     "red-1.svg",
@@ -289,92 +297,198 @@ function handleCommerceData(results, map) {
   var autoArray = [];
   var footArray = [];
   var typeArray = [];
+  var j = 0;
+  var k = 1;
+  var l = 1;
+  var markers = [];
 
-  results.forEach(function (commerce, i) {
-    titleArray.push(commerce.title);
+  flattenedResults.forEach(function (commerce) {
+    titleArray.push(commerce.placeName);
     autoArray.push(commerce.auto);
     footArray.push(commerce.foot);
     typeArray.push(commerce.type);
 
-    var getData = commerce.latLongData;
-    var array = getData.split(",");
-    var newLatLng = new google.maps.LatLng(array[0], array[1]);
+    var latLong = commerce.latLong.split(",");
+    var newLatLng = new google.maps.LatLng(latLong[0], latLong[1]);
+   
 
-    var content = `<tr><td><p class="overflow-hidden">`;
-    //... Add your content creation logic based on your requirements
-
-    if (typeArray[i] === "butcher" || typeArray[i] === "bakery") {
-      // For butcher or bakery types
-      var img =
-        typeArray[i] === "butcher"
-          ? "assets/img/Boucherie.svg"
-          : "assets/img/Boulangerie.svg";
-      var labelLetter = typeArray[i] === "butcher" ? k : l;
-      var markerImg =
-        typeArray[i] === "butcher"
-          ? "assets/img/Boucherie2.svg"
-          : "assets/img/Boulangerie2.svg";
-
-      addMarker(newLatLng, markerImg, labelLetter, img);
-
-      if (typeArray[i] === "butcher") {
-        k++;
-      } else if (typeArray[i] === "bakery") {
-        l++;
-      }
+    if (marker != undefined) {
+      marker.setPosition(newLatLng);
+      console.log("erreur !");
     } else {
-      // For other types
-      var img = "assets/img/" + numbers[j];
-      addMarker(newLatLng, img);
+      if (typeArray[i] == "butcher" || typeArray[i] == "bakery") {
+       
+        var content = `<tr>
+              <td>`;
+        content += `<p class="overflow-hidden">`;
+        if (typeArray[i] == "butcher") {
+          content +=
+            `<img src="assets/img/Boucherie2.svg" class="max-width-35" alt="" /><span class="spanNumber2">` +
+            k +
+            `</span>`;
+        } else {
+          content +=
+            `<img src="assets/img/Boulangerie2.svg" class="max-width-35" alt="" /><span class="spanNumber2">` +
+            l +
+            `</span>`;
+        }
+        content +=
+          `
+                  <span>
+                      <span style="padding-bottom:4px;"><strong>` +
+          titleArray[i] +
+          `</strong></span><br /><small>`;
 
-      j++;
+        if (autoArray[i].length) {
+          content +=
+            `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                          ` +
+            autoArray[i] +
+            ` min`;
+        }
+
+        if (footArray[i].length) {
+          content += `<img src="assets/img/Walking.svg" class="foot" 
+              `;
+          if (!autoArray[i].length) {
+            content += ` style="margin-left:0; "`;
+          }
+          content +=
+            `alt="" /> &nbsp;
+                          ` +
+            footArray[i] +
+            ` min`;
+        }
+
+        content += `</small></span></p></td></tr>`;
+
+        if (typeArray[i] == "butcher") {
+          $(".commerce-content-2").append(content);
+        } else if (typeArray[i] == "bakery") {
+          $(".commerce-content-3").append(content);
+        }
+
+        if (typeArray[i] == "butcher") {
+          var img = "assets/img/Boucherie.svg";
+          var labelLetter = "" + k + "";
+          k++;
+        } else if (typeArray[i] == "bakery") {
+          var img = "assets/img/Boulangerie.svg";
+          var labelLetter = "" + l + "";
+          l++;
+        }
+
+        var marker = new google.maps.Marker({
+          position: newLatLng,
+          map: map,
+          zIndex: 999,
+          icon: {
+            url: img,
+            scaledSize: new google.maps.Size(40, 40),
+          },
+          label: { text: labelLetter, className: "labelMap" },
+          draggable: true,
+        });
+        marker.set("category", "commerce");
+        markers.push(marker);
+      } else {
+
+        var content = `<tr>
+              <td>`;
+        content += `<p class="overflow-hidden">`;
+
+        content +=
+          `<img src="assets/img/` +
+          numbersInMaps[j] +
+          `" class="max-width-35" alt="" />`;
+        content +=
+          `
+                  <span>
+                      <span style="padding-bottom:4px;"><strong>` +
+          titleArray[i] +
+          `</strong></span><br /><small>`;
+
+        if (autoArray[i].length) {
+          content +=
+            `<img src="assets/img/Car.svg" class="car" alt="" /> &nbsp;
+                          ` +
+            autoArray[i] +
+            ` min`;
+        }
+
+        if (footArray[i].length) {
+          content += `<img src="assets/img/Walking.svg" class="foot" 
+              `;
+          if (!autoArray[i].length) {
+            content += ` style="margin-left:0; "`;
+          }
+          content +=
+            `alt="" /> &nbsp;
+                          ` +
+            footArray[i] +
+            ` min`;
+        }
+
+        content += `</small></span></p></td>
+              <td><p>
+                  <span>`;
+        if (typeArray[i] == "shopping_mall") {
+          content += `<img src="assets/img/carefoor.svg" class="max-width-45" alt="" />`;
+        } else if (typeArray[i] == "Delhaize") {
+          content += `<img src="assets/img/delheiz.svg" class="max-width-45" alt="" />`;
+        } else if (typeArray[i] == "Colruyt") {
+          content += `<img src="assets/img/cloryt.svg" class="max-width-45" alt="" />`;
+        } else {
+          content += ``;
+        }
+        /*  if (typeArray[i] == 'Carrefour') {
+              content += `<img src="assets/img/carefoor.svg" class="max-width-45" alt="" />`;
+          } else if (typeArray[i] == 'Delhaize') {
+              content += `<img src="assets/img/delheiz.svg" class="max-width-45" alt="" />`;
+          } else if (typeArray[i] == 'Colruyt') {
+              content += `<img src="assets/img/cloryt.svg" class="max-width-45" alt="" />`;
+          } else {
+              content += ``;
+          } */
+
+        content += `</span></p></td>
+          </tr>`;
+        $(".commerce-content").append(content);
+
+        var img = "assets/img/" + numbers[j];
+
+        var marker = new google.maps.Marker({
+          position: newLatLng,
+          map: map,
+          zIndex: 999,
+          icon: {
+            url: img,
+            scaledSize: new google.maps.Size(40, 40),
+          },
+          draggable: true,
+        });
+        marker.set("category", "commerce");
+        markers.push(marker);
+        j++;
+      }
+      
+      JSONobj.SHOPS = [
+        ...JSONobj.SHOPS.filter((el) => el.id !== i),
+        {
+          id: i,
+          latLongCommerce: commerce.latLong,
+          commerce: commerce.placeName,
+          autoCommerce: commerce.auto,
+          footCommerce: commerce.foot,
+          typeCommerce: commerce.type,
+        },
+      ];
+      
+      i++;
     }
-
-    // Push commerce data to JSONobj.COMMERCE
-    JSONobj.COMMERCE.push({
-      id: i,
-      latLongCOMMERCE: commerce.latLongData,
-      commerce: commerce.title,
-      autoCOMMERCE: commerce.auto,
-      footCOMMERCE: commerce.foot,
-    });
   });
 }
 
-/* 
-function addMarker(newLatLng, img, labelLetter, markerImg) {
-  var marker = new google.maps.Marker({
-    position: newLatLng,
-    map: map,
-    zIndex: 999,
-    icon: {
-      url: img,
-      scaledSize: new google.maps.Size(40, 40),
-    },
-    draggable: true
-  });
-
-  marker.set('category', "shopping_mall");
-  markers.push(marker);
-
-  if (labelLetter && markerImg) {
-    var marker2 = new google.maps.Marker({
-      position: newLatLng,
-      map: map,
-      zIndex: 999,
-      icon: {
-        url: markerImg,
-        scaledSize: new google.maps.Size(40, 40),
-      },
-      label: { text: labelLetter, className: "labelMap" },
-      draggable: true
-    });
-
-    marker2.set('category', "shopping_mall");
-    markers.push(marker2);
-  }
-}
- */
 function searchPlaces(types, counts) {
   var getData = $(".latLongAdresse").val();
   const array = getData.split(",");
@@ -388,21 +502,21 @@ function searchPlaces(types, counts) {
 
   var service = new google.maps.places.PlacesService(map);
 
-  var results = [];
+  var resultsArray = []; // To store transformed results as an array of objects
   var promises = types.flatMap(function (type, index) {
     return new Promise(function (resolve, reject) {
       service.nearbySearch(
         {
           location: map.getCenter(),
           radius: "5000",
-          type: [type],
+          type: [type.toString()],
         },
         function (placeResults, status) {
+
           if (status === google.maps.places.PlacesServiceStatus.OK) {
+            console.log("placeResults",placeResults)
             var selectedResults = placeResults.slice(0, counts[index]);
-
             var directionsService = new google.maps.DirectionsService();
-
             var durationPromises = selectedResults.map(function (place) {
               return new Promise(function (resolveDuration, rejectDuration) {
                 var drivePromise = calculateDuration(
@@ -422,9 +536,14 @@ function searchPlaces(types, counts) {
 
                 Promise.all([drivePromise, walkPromise])
                   .then(function (data) {
-                    travel = data;
-                    results.push(travel);
-                    resolveDuration();
+                    resolveDuration({
+                      placeName: data[0].placeName,
+                      location: data[0].location,
+                      type: data[0].type,
+                      auto: data[0].duration,
+                      foot: data[1].duration,
+                      latLong: `${data[0].geometry.location.lat()},${data[0].geometry.location.lng()}`,
+                    });
                   })
                   .catch(function (error) {
                     console.error("Error calculating durations:", error);
@@ -434,7 +553,9 @@ function searchPlaces(types, counts) {
             });
 
             Promise.all(durationPromises)
-              .then(function () {
+              .then(function (results) {
+                resultsArray.push(results);
+                console.log("resultsArray", resultsArray); 
                 resolve();
               })
               .catch(function (error) {
@@ -451,14 +572,17 @@ function searchPlaces(types, counts) {
 
   Promise.all(promises)
     .then(function () {
-      displayMallData(results);
-      console.log(results);
-      handleCommerceData(results);
+      // Flatten the array and handleResults
+      var flattenedResults = resultsArray.flat();
+      // console.log("flattenedResults",flattenedResults)
+      displayMallData(flattenedResults);
+      handleData(flattenedResults, map); 
     })
     .catch(function (error) {
       console.error(error);
     });
 }
+
 // Usage example
 var types = ["shopping_mall", "bakery", "butcher"];
 var counts = [3, 2, 2];
